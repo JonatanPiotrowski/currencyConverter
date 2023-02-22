@@ -5,16 +5,23 @@ api_key = '9728da3c182fb80949121e2a'
 supported_currencies = ['PLN', 'USD', 'EUR']
 
 
-def currency_exchange(source_currency, target_currency):
-    url = f'https://v6.exchangerate-api.com/v6/{api_key}/latest/{source_currency}'
+def get_exchange_rates(base_currency):
+    url = f'https://v6.exchangerate-api.com/v6/{api_key}/latest/{base_currency}'
     response = requests.get(url)
-    exchange_rate = response.json()
-    conversion_rates = exchange_rate['conversion_rates']
-    return f"{conversion_rates[source_currency]} {source_currency} = {conversion_rates[target_currency]:.2f} {target_currency}"
+    data = response.json()
+    return data['conversion_rates']
+
+
+def convert_currency(amount, from_currency, to_currency):
+    rates = get_exchange_rates(from_currency)
+    rate = rates[to_currency]
+    convert_amount = amount * rate
+    return convert_amount
 
 
 while True:
-    source_currency = input("Enter source currency: ")
-    target_currency = input("Enter target currency: ")
-    print(currency_exchange(source_currency, target_currency))
+    amount = float(input("Amount of money: "))
+    source_currency = input("Enter base currency: ")
+    target_currency = input("Enter base currency: ")
+    print(round(convert_currency(amount, source_currency, target_currency), 2))
     break
