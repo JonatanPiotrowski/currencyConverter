@@ -17,11 +17,3 @@ def convert_currency(amount, from_currency, to_currency):
     rate = rates[to_currency]
     convert_amount = amount * rate
     return convert_amount
-
-
-while True:
-    amount = float(input("Amount of money: "))
-    source_currency = input("Enter base currency: ")
-    target_currency = input("Enter base currency: ")
-    print(round(convert_currency(amount, source_currency, target_currency), 2))
-    break
