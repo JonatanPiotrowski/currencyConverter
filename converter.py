@@ -2,7 +2,13 @@ import requests
 
 api_key = '9728da3c182fb80949121e2a'
 
-supported_currencies = ['PLN', 'USD', 'EUR']
+
+def get_currencies_list():
+    url = f'https://v6.exchangerate-api.com/v6/{api_key}/latest/USD'
+    response = requests.get(url)
+    data = response.json()
+    currencies_list = list(data['conversion_rates'].keys())
+    return currencies_list
 
 
 def get_exchange_rates(base_currency):
